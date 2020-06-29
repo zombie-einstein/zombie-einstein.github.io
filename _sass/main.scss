@@ -1,0 +1,24 @@
+.center-image
+{
+    margin: 0 auto;
+    display: block;
+}
+
+figure {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+figure img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+figure figcaption {
+    opacity: 0.75;
+    width: 90%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
