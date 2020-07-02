@@ -13,7 +13,7 @@ tags: abm agent-based-modelling functional python
 
 Most agent based modeling (ABM) frameworks tend to make use of an 
 object-oriented (OOP) principals, and probably with good reason. The agents  
-in an ABM are generally stateful and are thus natural candidates for 
+in an ABM are generally stateful and thus natural candidates for 
 representation by classes encapsulating state and functionality; and 
 inheritance (or composition) allows common functionality to be reused.
 
@@ -23,14 +23,15 @@ a developer to construct a computation graph from function definitions with
 the work of linking everything together done in the background (something like
 [dagster](https://github.com/dagster-io/dagster) is a good example). 
 
-It was also motivated by a couple of sticking points I've noticed when writing 
+It was also motivated by a couple of things I've noticed when writing 
 ABMs using OOP patterns (though these are very subjective!):
 
 - Python has some really great OOP features, but it sometimes feels that the
-  flexibility in python makes using OOP a bit tedious when writing an 
-  ABM where you often want interfaces and encapsulation to be followed quite 
-  strictly. This is obviously less of a concern in other typed/compiled
-  languages, but then you lose the flexibility and speed of work in python.
+  flexibility and dynamic nature of python makes using OOP patterns a bit 
+  tedious when writing an ABM; where you often want interfaces and 
+  encapsulation to be followed quite strictly. This is obviously less of a 
+  concern in other typed/compiled languages, but then you lose the flexibility 
+  and speed of work in python.
 - I also feel I end up writing a lot of boiler plate code, and ABM APIs
   tend not to offer much apart from templates classes, or the patterns they do 
   recommend tend to be quite restrictive.
@@ -45,17 +46,24 @@ background, and offered a clean and flexible API to build a model.
 
 ## Theory
 
-At the core of the implementation is the concept of representing the time
-evolution of the model as a causal graph. 
+Very an broadly an agent based model consists of agents that interact in some
+manner (possibly inside a simulated environment). As the model progress
+the state of agents are updated depending on the state of other agents
+and the environment. It's usually the job of the model designer to 
+dictate how the agents behave and also how agents interact within the 
+model/environment. 
+
+At the core of this is the concept of representing the time evolution of the 
+model as a causal graph. 
 
 On the graph agents are represented by nodes, and edges represent causal 
-dependence between nodes. Each agent owns it's own state, so altogether
+dependence between agents. Each agent owns its own state, so altogether
 the agents represent the model/simulation environment, and the graph how the 
 components of the environment interact over time. 
 
 Each node (i.e. agent) then has:
 
-- Nodes that precede it causally. The state of these nodes then act as 
+- *Nodes that precede it causally*: The state of these nodes then act as 
   inputs to the update function of the node. These nodes could also 
   be thought of as being the observed state of the model when the node updates
 - Downstream nodes that the node can update. This allows the node to alter
@@ -65,9 +73,10 @@ Each node (i.e. agent) then has:
 url="/assets/functional_abm/causal_graph.png" 
 description="Representation of an ABM as a causal graph:<br>
 a) Agents are represented as nodes on a causal graph, directed edges 
-represent where agents are dependent on the state of other agents, and the 
-direction of the arrow time direction. Unlike a DAG computational graph the
-graph can be recursive with agent updating at multiple time-steps.<br>
+represent where an agent is dependent on the state of other agents, and the 
+direction of the arrows indicate the direction of time direction. 
+Unlike a DAG computational graph the graph can be recursive with agent 
+updating at multiple time-steps.<br>
 b) Each agent(node) has nodes in it's causal past that act as 
 inputs/observations, and downstream nodes that it can alter. 
 " %} 
@@ -83,10 +92,10 @@ into two components
 - The state of the agent
 - An update function that is called when the agent is updated
 
-When the agent is updated, it's update function is called with 
-the states of the preceding agents and the current state of the agent, 
-and the update function return the new state of the node, and any updates to 
-the state of downstream nodes.  
+When the agent is updated, its update function is called with 
+the states of the preceding agents and the current state of the agent
+as arguments. The update function then returns the new state of the node, 
+and any updates to the state of downstream nodes.  
 
 {% include image.html 
 url="/assets/functional_abm/update_function.png" 
@@ -99,8 +108,8 @@ node and any updates to downstream nodes." %}
 
 ### `@agent` Decorator
 
-An agent can be defined by decorating a function with the `@agent` decorator.
-The function should have the signature
+An agents behaviour can be defined by decorating an update function with 
+the `@agent` decorator. The function should have the signature
 
 {% highlight python %}
 @agent(scheduler=scheduler)
@@ -110,7 +119,7 @@ def foo(t, antecedents, state, descendants):
     return next_event_time
 {% endhighlight %}
 
-where when the update is called the arguments will be 
+When the update function is called the arguments will be 
 
 - `t`: The current model time
 - `antecedents`: Data structure containing the states of preceding nodes
@@ -122,8 +131,11 @@ and it returns one value, the time this agent will next update.
 
 The decorator argument `scheduler` is a class that controls when agents are 
 called and should be provided when the agent is defined (provided as part of 
-the package). Here the decorator would create a new class called `foo`
-wrapping the update function.
+the package). 
+
+In this example the decorator would create a new type (class) 
+called `foo` wrapping the update function and allowing it to be used as a 
+component of the model.
 
 ----
 *As noted above this is where the 'functional' approach breaks down as a bit
@@ -142,11 +154,12 @@ what y refers to. So in practice it's easier to pass states by reference and
 update them in place*
 
 ----
+
 ### Model Initialization
 
-Initializing the model is then done by creating instances of the agent
-following the same function pattern, for example for the `foo` function we 
-decorated above we might do
+Initializing the model is then done by creating instances of agent types
+following the same signature of the update function, for example for the 
+`foo` function we decorated above we might do
 
 {% highlight python %}
 # Initial states of the nodes
@@ -164,10 +177,10 @@ this would initialize agent nodes with `agent_state_2` be a precedent of
 
 ## Example
 
-For a more in depth example we can implement a function that 
-initializes and runs 
+This is probably better explained with a more in depth example. We can 
+implement a function that initializes and runs 
 [Conway's game of life](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life) 
-using this API
+using this API. In full this looks like:
 
 {% highlight python%}
 def gol(steps, initial_state):
@@ -212,17 +225,38 @@ def gol(steps, initial_state):
 This function accepts the initial state of the model (a numpy array) and the
 number of steps to run the model for. Breaking it down
 
-- This initializes a scheduler that will run the model for a fixed number 
-  of steps {% highlight python%}scheduler = StepBasedScheduler(steps){% endhighlight %}
-- The agent (a cell in this case) is defined using the decorator
+- This line initializes a scheduler that will run the model for a fixed number 
+  of steps 
+  {% highlight python%}scheduler = StepBasedScheduler(steps){% endhighlight %}
+- The agent behaviour (an agent is a cell on the array in this case) is defined 
+  using the decorator
   {% highlight python%}
   @agent(scheduler=scheduler)
       def cell(t, antecedents, state, descendants):
-          ...{% endhighlight %}
-  as expected it looks at it's neighbouring cells, and updates it's own
-  state accordingly, and returns `t+1` the next step
-- We then initialize the cells, passing in the numpy slices representing the
-  surrounding cells and state of each cell
+          live_neighbours = np.sum(antecedents) - antecedents[1,1]
+        
+        if live_neighbours < 2:
+            new_state = 0
+        elif live_neighbours == 2:
+            new_state = state[0,0]
+        elif live_neighbours == 3:
+            new_state = 1
+        elif live_neighbours > 3:
+            new_state = 0
+        
+        state[0:1,0:1] = new_state
+        
+        return t + 1{% endhighlight %}
+  as expected it looks at the previous state of the cells surrounding it 
+  (its antecedents) and counts the number of live cells then updates it's own
+  state accordingly. It return `t+1` which is the next of the model (all the
+  cells will use this function so this will all the cells update each 
+  step as desired).
+- We then initialize the cells with the relevant antecedents and state. In this
+  case the antecedents are slices of the numpy array representing the
+  neighbourhood surrounding each cell; and the state the relevant cell. It's
+  then just case of iterating over the array and assigning each cell to 
+  an agent. We also set the first step of each agent to fire at 0:
   {% highlight python%}
   for i in range(1, initial_state.shape[0]-1):
         for j in range(1, initial_state.shape[1]-1):
@@ -230,8 +264,8 @@ number of steps to run the model for. Breaking it down
                  initial_state[i-1: i+2, j-1: j+2],
                  initial_state[i:i+1, j:j+1],
                  {}){% endhighlight %}
-- We then run allow the model run the scheduler, storing a copy of the state at
-  each step
+- The model can then be run using the scheduler, and additionally we store a 
+  copy of the state at each step ot track the history of the model
   {% highlight python%}
   while not scheduler.finished:
         history.append(initial_state.copy())
@@ -239,7 +273,12 @@ number of steps to run the model for. Breaking it down
 
 This example used numpy as a data-structure to store the state of the model,
 but the API is very general, and as long as it can be passed by reference any
-data structure can be used to track the state and pass it to the update function.
+data structure can be used to track the state and pass the relevant parts of it 
+to the update function.
+ 
+The scheduling is also very general, in this case the model was designed to 
+update all the agents at fixed steps, but you could just as well use
+`datetime` as a variable, or have agents act at different intervals.
  
 For more examples see [here](https://github.com/zombie-einstein/functional_abm/tree/master/examples) 
 in the repo.
@@ -249,7 +288,7 @@ in the repo.
 For a short project I feel this turned out quite neatly. I think one of the
 nice features that came out as a side-effect is being able to make use of 
 different backends to store the state of the model. An approach using classes
-would require having a class instance for each agent, but with this API we
+would require storing state as part of the class structure but with this API we
 can make more efficient use of data structures to track state. For small models
 this results in quite neat code.
 
