@@ -394,14 +394,14 @@ initial information is replaced with a oscillating pattern.
 
 {% include image.html 
 url="/assets/prob_ca/rule_043_prob.png" 
-description="Time evolution of Rule 5 from a random initial state with a 
+description="Time evolution of Rule 43 from a random initial state with a 
 perturbation of 0.0001 applied to the update mapping. The uncertainty caused
 by the rule perturbation appears to oscillate over time with a pattern
 dependent on the initial distribution." %}
 
 {% include image.html 
 url="/assets/prob_ca/rule_043_mut_info.png" 
-description="The corresponding mutual information of the evolution of Rule 5 
+description="The corresponding mutual information of the evolution of Rule 43 
 showing the dependencies between neighbouring cells as the model progresses" %}
 
 {% include image.html 
