@@ -32,7 +32,9 @@ intervals).
 url="/assets/fireflies/time_evolution.jpg" 
 description="Time evolution of the phase. With no observed events (a) $\phi$
 increases linearly until $\phi_{t}$ at which point if fires and resets.
-When a signal is observed (b) $\phi$ is incremented by $\Delta\phi(\phi)$" %}
+When a signal is observed (b) $\phi$ is incremented by $\Delta\phi(\phi).$
+Image taken from 'Firefly Synchronization in Ad-Hoc Networks': Tyrell,
+Bettstetter & Auer, 2006." %}
 
 In an effort to co-ordinate their flashes the fireflies react to flashes from
 other fireflies, updating their phase as $\phi\rightarrow\phi+\Delta\phi$ 
