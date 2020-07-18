@@ -127,8 +127,8 @@ This implementation has been chosen with a couple of things in mind:
 
 {% include image.html 
 url="/assets/fireflies/agent_phase.png" 
-description="$Phase over time represented by \cos(\phi(t)))$ for a subset of 
-nodes showing how nodes react to signals." %}
+description="Phase evolution over time represented by $\cos(\phi(t)))$ for a 
+subset of nodes showing how nodes react to signals." %}
 
 The real trick in this model was modelling the delay/travel time of signals by
 placing events in the future of each node. It's interesting to see how the 
