@@ -111,7 +111,7 @@ description="Events produced by a node are placed in the future
 of other nodes in the model to simulate delays in signals" %}
 
 *Note: This does have the drawback that event distances have to be integer 
-values (as it then informs where in the eventeffectivtimeely array to add the event). Events
+values (as it then informs where in the array to add the event). Events
 have to be placed at minimum size of $1$ to be seen. This does mean a distance
 $0$ can be used to implement a lack of communication between nodes.*
 
