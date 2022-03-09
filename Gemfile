@@ -33,5 +33,6 @@ end
 # Performance-booster for watching directories on Windows
 gem "wdm", "~> 0.1.0", :install_if => Gem.win_platform?
 
-   # vulnerability found
-   gem "kramdown", ">= 2.3.1"
+# vulnerability found
+gem "kramdown", "~> 2.3.1"
+gem "nokogiri", "~> 1.13.3"
