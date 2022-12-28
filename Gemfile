@@ -1,5 +1,5 @@
 source "https://rubygems.org"
-ruby "2.7.0"
+ruby "3.0.2"
 
 # Hello! This is where you manage which Jekyll version is used to run.
 # When you want to use a different version, change it below, save the
@@ -26,7 +26,7 @@ end
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 # and associated library.
 install_if -> { RUBY_PLATFORM =~ %r!mingw|mswin|java! } do
-  gem "tzinfo", "~> 1.2"
+  gem "tzinfo", "~> 1.2.10"
   gem "tzinfo-data"
 end
 
@@ -35,5 +35,5 @@ gem "wdm", "~> 0.1.0", :install_if => Gem.win_platform?
 
 # vulnerability found
 gem "kramdown", "~> 2.3.1"
-gem "nokogiri", "~> 1.13.6"
-gem "commonmarker", ">= 0.23.4"
+gem "nokogiri", "~> 1.13.9"
+gem "commonmarker", ">= 0.23.6"
