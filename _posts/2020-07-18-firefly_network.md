@@ -1,8 +1,8 @@
 ---
 layout: post
 mathjax: true
-title:  "Firefly networks"
-date:   2020-07-18 13:17:20 +0100
+title:  "Firefly Networks"
+date:   2020-07-18
 tags: python networks rl
 ---
 
