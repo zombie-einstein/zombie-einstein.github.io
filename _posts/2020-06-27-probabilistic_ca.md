@@ -6,7 +6,7 @@ date:   2020-06-27 22:54:33 +0100
 tags: cellular-automata python
 ---
 
-*The code for this project can be found on it's 
+*The code for this project can be found on its 
 [github repo](https://github.com/zombie-einstein/probabilistic_ca)*
 
 ## Introduction
