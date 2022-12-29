@@ -2,7 +2,7 @@
 layout: post
 mathjax: true
 title:  "Cellular Automata Causal Regions"
-date:   2020-07-12 12:39:11 +0100
+date:   2020-07-12
 tags: cellular-automata python causality
 ---
 

@@ -2,7 +2,7 @@
 layout: post
 mathjax: true
 title:  "Functional ABM API"
-date:   2020-06-29 21:33:38 +0100
+date:   2020-06-29
 tags: abm agent-based-modelling functional python
 ---
 

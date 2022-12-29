@@ -2,7 +2,7 @@
 layout: post
 mathjax: true
 title:  "Continuous Probabilistic Cellular Automata"
-date:   2020-06-27 22:54:33 +0100
+date:   2020-06-27
 tags: cellular-automata python
 ---
 

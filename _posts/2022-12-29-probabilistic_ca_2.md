@@ -2,7 +2,7 @@
 layout: post
 mathjax: true
 title:  "Continuous Probabilistic Cellular Automata Part 2: JAX and Differentiability"
-date:   2022-12-28 22:00:00 +0100
+date:   2022-12-28
 tags: cellular-automata python jax
 ---
 
@@ -21,14 +21,14 @@ state. In this extension cells are a probability distribution over possible
 states. The update rules then map probability distributions to probability 
 distributions and the update rules themselves can be probabilistic.
 
-## Improvements
+## Project Improvements
 
-There have been two main updates to this project:
+There have been two main updates:
 
-### Log Probability Distributions
+### Log Probability Distributionsa
 
 As noted in the previous post, due to the recursive nature of the CA, using
-state probabilities directly often, results in numerical underflow as
+state probabilities directly often results in numerical underflow as
 probabilities decay to small values. This can be avoided using log 
 probabilities and techniques like the 
 "[log-sum-exp trick](https://gregorygundersen.com/blog/2020/02/09/log-sum-exp/)".
@@ -56,13 +56,13 @@ $$\begin{align}
 as the state of the CA.
 
 This allows for much better numerical stability (and larger executions as 
-shown below), at the cost of not being able to represent values like zero 
-probabilities. 
+shown below), at the cost of not being able to represent absolute values 
+like zero. 
 
 {% include image.html 
-url="/assets/prob_ca_2/rule_14.png" 
-description="Time evolution of the entropy of Rule 14 with small 
-perturbations applied to the binary rule, and starting from a uniformly 
+url="/assets/prob_ca_2/prob_rules_entropy.png" 
+description="Time evolution of the entropy of Rules 14, 35 and 37 with small 
+perturbations applied to the normal binary rule, and starting from a uniformly 
 random initial state." %}
 
 ### JAX Implementation
@@ -70,15 +70,15 @@ random initial state." %}
 [JAX](https://jax.readthedocs.io/en/latest/index.html) is a Python high 
 performance numerical computation library that has been around for a few
 years but seems to have recently gained a lot of popularity. There's a lot
-to be said about it (I particularly really love the f, this is as simple as unctional API) but
+to be said about it (I particularly really love the functional API) but
 it has two particularly killer features:
 
 - **Performance:** JAX compiles to high performance code via XLA. The 
   compilation and optimisation stage results in high performance CPU code, 
-  but an also compile to GPU or even TPU without changes to the code. In 
+  but can also compile to GPU or even TPU without changes to the code. In 
   particular for this project this allows very fast execution of CA at 
   large scales on GPU (speeding up the optimisation process detailed below).
-- **Gradients:** Programs written using JAX can then (usually) readily be
+- **Gradients:** Programs written using JAX can then (usually) be
   differentiated, and their gradients found (see [here](https://jax.readthedocs.io/en/latest/notebooks/quickstart.html#taking-derivatives-with-grad)
   for more details). This has numerous applications
   across many areas of ML and mathematical modelling, but in this particular
@@ -89,9 +89,8 @@ A notebook with examples of using this implementation can be found
 
 ## Differentiability and Optimisation
 
-The probabilistic CA effectively maps an update rule/distribution (denoted as
-$R$ here) and initial distribution/state $S_{0}$ to an output series of 
-states $S_{t}$:
+The probabilistic CA effectively maps an update rule/distribution $R$ and 
+initial distribution/state $S_{0}$ to an output series of states $S_{t}$:
 
 $$\begin{align}
 C(R, S_{0}) \rightarrow S_{t}
@@ -107,14 +106,15 @@ dS_{t}\mathbin{/}dR \quad\quad\text{or}\quad\quad dS_{t}\mathbin{/}dS_{0}
 In this example we will look at differentiating with respect to the 
 update rule, and using this to optimise the rule using gradient descent.
 
-For binary states the update rules is designated by 8 values, R_{j}, giving the
-probability of a previous state mapping to a new state
+For binary states the update rules is designated by 8 values, $R_{j}$, giving 
+the probability of a previous state mapping to a new state
 
 $$\begin{equation}
 R_{j} = P(S_{i}^{t+1}=1 | (S_{i-1}^{t}, S_{i}^{t}, S_{i+1}^{t})=j)
 \end{equation}$$
 
-where $j$ just maps the permutations of the previous states to integers.
+where $j$ just maps the possible permutations of the previous states to 
+integers.
 
 We can then calculate $\partial S_{t}\mathbin{/}\partial R_{j}$, and use 
 gradient descent to calculate iteratively update the rule
@@ -150,13 +150,26 @@ process, starting from a completely random initial ruleset. Each iteration
 runs the CA for a fixed number of steps and evaluates $L(S_{t})$" %}
 
 The change in loss, and gradients show some interesting behaviour (as shown 
-below), training slows before quickly converging after ~20,000 steps which is
-also reflected in the gradients of the individual rule components $R_{j}$ 
+below), training slows initially, before quickly converging after ~20,000 steps 
+which is also reflected in the gradients of the individual rule components $R_{j}$ 
 
 {% include image.html 
 url="/assets/prob_ca_2/loss_and_gradients.png" 
-description="Time series generated by CA rules over the course of the training
-process, starting from a completely random initial ruleset. Each iteration
-runs the CA for a fixed number of steps and evaluates $L(S_{t})$" %}
+description="MSE and gradients of rule components over the course of training." %}
 
-## Conclusion
+## Conclusion & Next Steps
+
+The combination of a proper log probability implementation and JAXs ability to
+differentiate (plus performance gain from JAX) turned out really nicely. 
+
+It'd now be nice to take this and see if optimisation can be used to find 
+interesting probabilistic CA rules. From initial experimentation the hard part 
+of this was designing a good loss function. The example here relies on having
+a known target, but what aggregate loss function will generate interesting CA
+rules? I suspect some interesting entropy measure, but need to do more work
+on what this might look like.
+
+One are where this might be fruitful is for larger state spaces. The space of
+binary states is small enough to explore manually, but three states already
+becomes a much bigger space, being able to search this space effectively using
+gradient based methods may be an intersting result.
