@@ -35,7 +35,7 @@ gem "wdm", "~> 0.1.0", :install_if => Gem.win_platform?
 
 # vulnerability found
 gem "kramdown", "~> 2.3.2"
-gem "nokogiri", "~> 1.14.1"
+gem "nokogiri", "~> 1.14.3"
 gem "commonmarker", ">= 0.23.7"
 gem "activesupport", ">= 7.0.4.3"
 
