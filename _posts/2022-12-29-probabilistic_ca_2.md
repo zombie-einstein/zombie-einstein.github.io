@@ -25,7 +25,7 @@ distributions and the update rules themselves can be probabilistic.
 
 There have been two main updates:
 
-### Log Probability Distributionsa
+### Log Probability Distributions
 
 As noted in the previous post, due to the recursive nature of the CA, using
 state probabilities directly often results in numerical underflow as
