@@ -37,6 +37,6 @@ gem "wdm", "~> 0.1.0", :install_if => Gem.win_platform?
 gem "kramdown", "~> 2.3.2"
 gem "nokogiri", "~> 1.14.3"
 gem "commonmarker", ">= 0.23.10"
-gem "activesupport", ">= 7.0.4.3"
+gem "activesupport", ">= 7.0.7.1"
 
 gem "webrick", "~> 1.7"
