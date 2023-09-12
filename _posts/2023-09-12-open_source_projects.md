@@ -69,13 +69,17 @@ def bar(x):
 
 when visualised by Jaxpr-viz produces:
 
-![bar-computation-graph]("/assets/open_source/bar_collapsed.png"){:class="img-responsive"}
+{% include image.html 
+url="/assets/open_source/bar_collapsed.png" 
+description="" %}
 
 By default, it will collapse sub-graphs that only contain built in primitives, to
 make the structure of the overall program clearer. This can be toggled to show
 the full details of the computation graph:
 
-![bar-computation-expanded-graph]("/assets/open_source/bar_expanded.png"){:class="img-responsive"}
+{% include image.html 
+url="/assets/open_source/bar_expanded.png" 
+description="" %}
 
 It can also visualise more complex primitives like conditional statements
 
@@ -92,9 +96,11 @@ def conditional(arg):
 
 producing
 
-![conditional-computation-graph]("/assets/open_source/conditional.png"){:class="img-responsive"}
+{% include image.html 
+url="/assets/open_source/conditional.png" 
+description="" %}
 
-or switch statements and scans/loops.
+Switch statements and scans/loops are also supported.
 
 See [the repo](https://github.com/zombie-einstein/jaxpr-viz) for more details and installation 
 instructions.
