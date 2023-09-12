@@ -10,7 +10,7 @@ A couple of open-source I've been working on:
 
 ## JAX-Tqdm
 
-https://github.com/jeremiecoullon/jax-tqdm
+[github.com/jeremiecoullon/jax-tqdm](https://github.com/jeremiecoullon/jax-tqdm)
 
 This library allows you to add the popular Python [tqdm progress bar](https://github.com/tqdm/tqdm)
 to JAX compiled scans and loops. The original method was developed by
@@ -42,7 +42,7 @@ for more details.
 
 ## Jaxpr-Viz
 
-https://github.com/zombie-einstein/jaxpr-viz
+[github.com/zombie-einstein/jaxpr-viz](https://github.com/zombie-einstein/jaxpr-viz)
 
 This library is designed to visualise JAX computation graphs. JAX has built-in
 methods to visualise the HLO graph produced by JAX, but when I've used this, 
