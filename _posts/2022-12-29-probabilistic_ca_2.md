@@ -172,4 +172,4 @@ on what this might look like.
 One are where this might be fruitful is for larger state spaces. The space of
 binary states is small enough to explore manually, but three states already
 becomes a much bigger space, being able to search this space effectively using
-gradient based methods may be an intersting result.
+gradient based methods may be an interesting result.
