@@ -113,7 +113,7 @@ evolves over time as the update rule is applied to it.
 This motivates being able to model a CA where the state of a 
 cell can be a probability distribution on the state space (or maybe this could
 be thought of a superposition of states as in QM, though without any phase
-information). As the update rule is applied to a neighbourhood of
+information). As the update rule is applied to a neighbourhood
 of cells, this also requires that we are able to model the joint or conditional
 probability of neighbouring cells. 
  
@@ -129,7 +129,7 @@ $s$ denoted as
 
 $$P(s_{i}^{t})=P(s_{i}^{t}=s)\quad\text{where}\quad s\in S$$
 
-The update rule applies to a cell and it's left and right neighbours. The 
+The update rule applies to a cell, and its left and right neighbours. The 
 probability of the cell being in a state at the next step is then given by 
 
 $$
@@ -147,11 +147,11 @@ update function.
 
 > **Note:** *The joint probability is important here as for certain rules
 > neighbouring cells cannot be in certain configurations and as such should
-> not be treated independently
+> not be treated independently*
 
 This approach is ok for one step of the model but to repeatedly perform 
 this update for an arbitrary number of steps we need the joint 
-probability of two neighbouring cells at each site and it's neighbour to the 
+probability of two neighbouring cells at each site, and its neighbour to the 
 right for each time step
 
 $$P\left(s_{i}^{t}, s_{i+1}^{t}\right)$$
@@ -282,7 +282,7 @@ In brief the models then follows the following steps:
   to work with log probabilities and use techniques like the 
   [log-sum-exp trick](https://www.xarg.org/2016/06/the-log-sum-exp-trick-in-machine-learning/).
   In this case there a couple of things that make this tricky:
-  - The lack of an well-defined 0 probability in log space prohibits using 
+  - The lack of a well-defined 0 probability in log space prohibits using 
     binary states as inputs to the model
   - Calculating the marginal probabilities required in the update step still
     means moving between log and normal probabilities which does not aid in
@@ -322,7 +322,7 @@ Given the large number of potential parametrizations of the model (mixing
 probabilistic update rules, and initial states) I looked to focus on two simple
 cases:
 
-- Standard update rules (i.e. deterministic) with an randomly chosen discrete 
+- Standard update rules (i.e. deterministic) with a randomly chosen discrete 
   initial state containing a single cell in a mixed state. Used to investigate 
   how the uncertainty from a single cell propagates through the state over 
   time.
@@ -365,7 +365,7 @@ asymmetrically, with a boundary formed on the right by the cell pattern." %}
 url="/assets/prob_ca/rule_054_uncertain_cell.png" 
 description="Time evolution of Rule 54 from a random initial state with a 
 single cell in a mixed state $p(0)=0.5$. The uncertainty region seems to
-interacts with the stable regions of the deterministic evolution." %}
+interact with the stable regions of the deterministic evolution." %}
 
 {% include image.html 
 url="/assets/prob_ca/rule_060_uncertain_cell.png" 
@@ -389,7 +389,7 @@ url="/assets/prob_ca/rule_005_prob.png"
 description="Time evolution of Rule 5 from a random initial state with a 
 perturbation of 0.0001 applied to the update mapping. Only certain patterns
 persist pass the uncertainty introduced by the perturbed rule, otherwise 
-initial information is replaced with a oscillating pattern. 
+initial information is replaced with an oscillating pattern. 
 " %}
 
 {% include image.html 
@@ -423,7 +423,7 @@ In terms of a model, I feel this turned out quite well. Extending a regular CA
 into one that supports mixed/probabilistic cell states turned out to be quite
 a neat algorithm, and the resulting implementation relatively speedy. 
 It'd be nice to have a robust way of working in log-probability space, 
-but the current model seems relatively robust in most cases. Currently the 
+but the current model seems relatively robust in most cases. Currently, the 
 model-runner only supports binary states, but the extension to larger state 
 spaces should be relatively straight forward. 
 
