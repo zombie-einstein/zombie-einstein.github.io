@@ -32,7 +32,7 @@ ABMs using OOP patterns (though these are very subjective!):
   encapsulation to be followed quite strictly. This is obviously less of a 
   concern in other typed/compiled languages, but then you lose the flexibility 
   and speed of work in python.
-- I also feel I end up writing a lot of boiler plate code, and ABM APIs
+- I also feel I end up writing a lot of boilerplate code, and ABM APIs
   tend not to offer much apart from templates classes, or the patterns they do 
   recommend tend to be quite restrictive.
 
@@ -77,7 +77,7 @@ represent where an agent is dependent on the state of other agents, and the
 direction of the arrows indicate the direction of time direction. 
 Unlike a DAG computational graph the graph can be recursive with agent 
 updating at multiple time-steps.<br>
-b) Each agent(node) has nodes in it's causal past that act as 
+b) Each agent(node) has nodes in its causal past that act as 
 inputs/observations, and downstream nodes that it can alter. 
 " %} 
 
@@ -100,7 +100,7 @@ and any updates to the state of downstream nodes.
 {% include image.html 
 url="/assets/functional_abm/update_function.png" 
 description="Functional implementation of agent updates. When an agent is 
-updated it's update function is called, with the inputs being the upstream
+updated its update function is called, with the inputs being the upstream
 nodes and current state of the agent and the outputs the new state of the 
 node and any updates to downstream nodes." %}
 
@@ -248,8 +248,8 @@ number of steps to run the model for. Breaking it down
         
         return t + 1{% endhighlight %}
   as expected it looks at the previous state of the cells surrounding it 
-  (its antecedents) and counts the number of live cells then updates it's own
-  state accordingly. It return `t+1` which is the next of the model (all the
+  (its antecedents) and counts the number of live cells then updates its own
+  state accordingly. It returns `t+1` which is the next of the model (all the
   cells will use this function so this will all the cells update each 
   step as desired).
 - We then initialize the cells with the relevant antecedents and state. In this
@@ -286,7 +286,7 @@ in the repo.
 ## Conclusion
 
 For a short project I feel this turned out quite neatly. I think one of the
-nice features that came out as a side-effect is being able to make use of 
+nice features that came out as a side effect is being able to make use of 
 different backends to store the state of the model. An approach using classes
 would require storing state as part of the class structure but with this API we
 can make more efficient use of data structures to track state. For small models
@@ -296,7 +296,7 @@ This does come with some drawbacks though.
 
 - You need to pass everything required as part of the arguments to the update 
   function (where as part of an OOP pattern you would be able to look up 
-  attributes on the class). For example you might want to pass in a a global 
+  attributes on the class). For example, you might want to pass in a global 
   object like a random number generator (the API might benefit from having an 
   additional `context` argument to make this easier)
 - Allowing nodes to alter other nodes can cause some conflicts. This seems

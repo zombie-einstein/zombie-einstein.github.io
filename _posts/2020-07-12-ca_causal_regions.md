@@ -34,7 +34,7 @@ url="/assets/causal_regions/triples_graph.png"
 description="Each node on the graph represents a triple of cells (in this case 
 for binary states) and edges the result of shifting the triple left and
 appending the next cell in the sequence i.e. a node is adjacent to another
-if it overlaps it's neighbours patter. In this manner we can represent the 
+if it overlaps its neighbours pattern. In this manner we can represent the 
 state of the CA as a walk on this graph, following edges as we move along the 
 array." %}
 
@@ -160,11 +160,11 @@ along with the corresponding causal region evolution." %}
 
 ## Conclusion
 
-Like the the 
+Like the 
 [probabilistic cellular automata]({% post_url 2020-06-27-probabilistic_ca %}) 
 project I feel the algorithm and implementation turned out really nicely
 but there was not a strong conclusion to be drawn from the results. As noted
-above in a few cases it seem to nicely pick out patterns from the background 
+above in a few cases it seems to nicely pick out patterns from the background 
 noise, but this is not general across the board.
 
 I think part of this might be down to choice of function to flatten the 
