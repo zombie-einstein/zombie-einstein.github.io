@@ -39,4 +39,4 @@ gem "nokogiri", "~> 1.16.5"
 gem "commonmarker", ">= 0.23.10"
 gem "activesupport", ">= 7.0.7.1"
 
-gem "webrick", "~> 1.7"
+gem "webrick", "~> 1.8.2"
