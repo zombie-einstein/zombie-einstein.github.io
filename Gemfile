@@ -1,5 +1,5 @@
 source "https://rubygems.org"
-ruby "3.0.2"
+ruby "3.1.2"
 
 # Hello! This is where you manage which Jekyll version is used to run.
 # When you want to use a different version, change it below, save the
@@ -35,7 +35,7 @@ gem "wdm", "~> 0.1.0", :install_if => Gem.win_platform?
 
 # vulnerability found
 gem "kramdown", "~> 2.3.2"
-gem "nokogiri", "~> 1.16.5"
+gem "nokogiri", "~> 1.18.3"
 gem "commonmarker", ">= 0.23.10"
 gem "activesupport", ">= 7.0.7.1"
 
