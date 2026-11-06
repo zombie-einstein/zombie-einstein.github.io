@@ -16,11 +16,11 @@ gem "minima", "~> 2.5.1"
 
 # If you want to use GitHub Pages, remove the "gem "jekyll"" above and
 # uncomment the line below. To upgrade, run `bundle update github-pages`.
-gem "github-pages", "~> 232", group: :jekyll_plugins
+gem "github-pages", "~> 233", group: :jekyll_plugins
 
 # If you have any plugins, put them here!
 group :jekyll_plugins do
-  gem "jekyll-feed", "~> 0.17.0"
+  gem "jekyll-feed", "~> 0.18.0"
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
@@ -35,9 +35,9 @@ gem "wdm", "~> 0.1.0", :install_if => Gem.win_platform?
 
 # vulnerability found
 gem "kramdown", "~> 2.4.0"
-gem "nokogiri", "~> 1.16.7"
+gem "nokogiri", "~> 1.18.9"
 gem "commonmarker", ">= 0.23.10"
 gem "activesupport", ">= 7.0.7.1"
 gem "json", ">= 2.10.2"
-
+gem "rubyzip", ">= 3.4.0"
 gem "webrick", "~> 1.8.2"
